@@ -14,3 +14,6 @@ Identity Server -> OpenID Connect and OAuth2 framework for ASP.NET Core by Domin
 Dependencies for ESDIDP Project:
 1) IdentityServer4
 2) Microsoft.Extensions.Logging.Debug
+3) Microsoft.aspnetcore.mvc
+3) Microsoft.aspnetcore.StaticFiles
+4) obtain zip files https://github.com/IdentityServer/IdentityServer4.Quickstart.UI
