@@ -73,6 +73,10 @@ namespace ESD.IDP
                     {
                         new Secret("secret".Sha256())
                     },
+                    PostLogoutRedirectUris =
+                    {
+                        "https://localhost:44350/signout-callback-oidc"
+                    }
                     //AlwaysIncludeUserClaimsInIdToken = true
                 }
             };
