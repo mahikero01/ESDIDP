@@ -6,6 +6,11 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using ImageGallery.Client.Services;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using System.Threading.Tasks;
+using System.Security.Claims;
+using System.Linq;
+using Microsoft.AspNetCore.Authentication;
 
 namespace ImageGallery.Client
 {
@@ -73,7 +78,37 @@ namespace ImageGallery.Client
                    SignInScheme = "Cookies",
                    SaveTokens = true,
                    ClientSecret = "secret",
-                   GetClaimsFromUserInfoEndpoint = true
+                   GetClaimsFromUserInfoEndpoint = true,
+                   Events = new OpenIdConnectEvents()
+                   {
+                       OnTokenValidated = tokenValidatedContext =>
+                       {
+                           var identity = tokenValidatedContext.Ticket.Principal.Identity as ClaimsIdentity;
+
+                           var subjectClaim = identity.Claims.FirstOrDefault(z => z.Type == "sub");
+
+                           var newClaimsIdentity = new ClaimsIdentity(
+                               tokenValidatedContext.Ticket.AuthenticationScheme,
+                               "given_name",
+                               "role");
+
+                           newClaimsIdentity.AddClaim(subjectClaim);
+
+                           tokenValidatedContext.Ticket = new AuthenticationTicket(
+                            new ClaimsPrincipal(newClaimsIdentity),
+                            tokenValidatedContext.Ticket.Properties,
+                            tokenValidatedContext.Ticket.AuthenticationScheme);
+
+                           return Task.FromResult(0);
+                       },
+
+                       OnUserInformationReceived = UserInformationReceivedContext =>
+                       {
+                           return Task.FromResult(0);
+                       }
+
+                   }
+
             });
 
             app.UseStaticFiles();
