@@ -89,6 +89,15 @@ namespace ESD.IDP
 
                     AccessTokenLifetime = 120,
 
+                    //AbsoluteRefreshTokenLifetime
+
+                    //RefreshTokenExpiration = TokenExpiration.Sliding,
+                    //SlidingRefreshTokenLifetime = ...
+
+                    UpdateAccessTokenClaimsOnRefresh = true,
+
+                    AllowOfflineAccess = true,
+
                     RedirectUris = new List<string>()
                     {
                         "https://localhost:44350/signin-oidc"
