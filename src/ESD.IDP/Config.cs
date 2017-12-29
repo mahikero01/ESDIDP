@@ -83,6 +83,12 @@ namespace ESD.IDP
                     ClientName = "Image Gallery",
                     ClientId = "imagegalleryclient",
                     AllowedGrantTypes = GrantTypes.Hybrid,
+
+                    //IdentityTokenLifetime = 300,
+                    //AuthorizationCodeLifetime = 300,
+
+                    AccessTokenLifetime = 120,
+
                     RedirectUris = new List<string>()
                     {
                         "https://localhost:44350/signin-oidc"

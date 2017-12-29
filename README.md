@@ -15,6 +15,20 @@ ABAC -> Attribute-based Access Control (CBAC -> Claims-based Access Control) (PB
 Identity Server -> OpenID Connect and OAuth2 framework for ASP.NET Core by Dominick Baier and Brock Allen
 
 
+Token Lifetimes and Expiration
+
+Identity token
+1) Very short lifetime (default: 5 minutes)
+2) Used right after delivery
+3) applications often implement their own expiration policies
+
+
+Access token
+1) Longer lifetime (default: 1 hour)
+2) Must be renewed to regain access to resources
+3) The IDP controls the expiration policy
+
+
 Dependencies for ESDIDP Project:
 1) IdentityServer4
 2) Microsoft.Extensions.Logging.Debug
