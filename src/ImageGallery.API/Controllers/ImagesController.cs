@@ -42,15 +42,17 @@ namespace ImageGallery.API.Controllers
         }
 
         [HttpGet("{id}", Name = "GetImage")]
+        [Authorize("MustOwnImage")]
         public IActionResult GetImage(Guid id)
         {
+            /*
             var ownerId = User.Claims.FirstOrDefault(c => c.Type == "sub").Value;
 
             if (!_galleryRepository.IsImageOwner(id, ownerId))
             {
                 return StatusCode(403);
             }
-
+            */
             var imageFromRepo = _galleryRepository.GetImage(id);
 
             if (imageFromRepo == null)
@@ -121,14 +123,15 @@ namespace ImageGallery.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize("MustOwnImage")]
         public IActionResult DeleteImage(Guid id)
         {
-            var ownerId = User.Claims.FirstOrDefault(c => c.Type == "sub").Value;
+            /*var ownerId = User.Claims.FirstOrDefault(c => c.Type == "sub").Value;
 
             if (!_galleryRepository.IsImageOwner(id, ownerId))
             {
                 return StatusCode(403);
-            }
+            }*/
 
             var imageFromRepo = _galleryRepository.GetImage(id);
 
@@ -148,15 +151,16 @@ namespace ImageGallery.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize("MustOwnImage")]
         public IActionResult UpdateImage(Guid id, 
             [FromBody] ImageForUpdate imageForUpdate)
         {
-            var ownerId = User.Claims.FirstOrDefault(c => c.Type == "sub").Value;
+            /*var ownerId = User.Claims.FirstOrDefault(c => c.Type == "sub").Value;
 
             if (!_galleryRepository.IsImageOwner(id, ownerId))
             {
                 return StatusCode(403);
-            }
+            }*/
 
             if (imageForUpdate == null)
             {
