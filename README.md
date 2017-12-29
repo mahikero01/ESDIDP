@@ -7,6 +7,10 @@ Public cients -> Incapable of maintaining the confidentiality of their credentia
 TLS -> Transport Layer Security 
 SSL -> Secured Sockets Layer
 
+RBAC -> Role-base Access Control
+ABAC -> Attribute-based Access Control (CBAC -> Claims-based Access Control) (PBAC -> Policy-based Access Control)
+
+
 
 Identity Server -> OpenID Connect and OAuth2 framework for ASP.NET Core by Dominick Baier and Brock Allen
 
