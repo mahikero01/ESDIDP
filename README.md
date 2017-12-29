@@ -26,6 +26,7 @@ Dependencies of ImageClient:
 1) Microsoft.aspnetcore.Authentication.Cookies
 2) Microsoft.aspnetcore.Authentication.OpenIdConnect
 3) IdentityModel
+4) Microsoft.AspNetCore.Authorization
 
 Dependencies of ImageAPI:
 1) IdentityServer4.AccessTokenValidation
