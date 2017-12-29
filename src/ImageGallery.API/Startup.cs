@@ -96,7 +96,7 @@ namespace ImageGallery.API
 
             app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
             {
-                Authority = "https://localhost:44323/",
+                Authority = "https://localhost:44397/",
                 RequireHttpsMetadata = true,
 
                 ApiName = "imagegalleryapi"
