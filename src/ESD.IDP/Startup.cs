@@ -38,7 +38,8 @@ namespace ESD.IDP
 
             services.AddIdentityServer()
                     .AddDeveloperSigningCredential()
-                    .AddTestUsers(Config.GetUsers())
+                    //.AddTestUsers(Config.GetUsers())
+                    .AddESDUserStore()
                     .AddInMemoryIdentityResources(Config.GetIdentityResources())
                     .AddInMemoryApiResources(Config.GetApiResources())
                     .AddInMemoryClients(Config.GetClients());
