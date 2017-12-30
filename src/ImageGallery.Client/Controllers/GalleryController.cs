@@ -10,8 +10,8 @@ using ImageGallery.Model;
 using System.Net.Http;
 using System.IO;
 using ImageGallery.Client.Services;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System.Diagnostics;
 using IdentityModel.Client;
 
@@ -50,7 +50,6 @@ namespace ImageGallery.Client.Controllers
             {
                 return RedirectToAction("AccessDenied", "Authorization");
             }
-
 
             throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
         }
@@ -133,11 +132,9 @@ namespace ImageGallery.Client.Controllers
                 return RedirectToAction("AccessDenied", "Authorization");
             }
 
-
             throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
         }
-
-        [Authorize(Roles = "PayingUser")]
+        
         public IActionResult AddImage()
         {
             return View();
@@ -192,7 +189,7 @@ namespace ImageGallery.Client.Controllers
         public async Task Logout()
         {
             // get the metadata
-            var discoveryClient = new DiscoveryClient("https://localhost:44379/");
+            var discoveryClient = new DiscoveryClient("https://localhost:44397/");
             var metaDataResponse = await discoveryClient.GetAsync();
 
             // create a TokenRevocationClient
@@ -232,11 +229,11 @@ namespace ImageGallery.Client.Controllers
                         , revokeRefreshTokenResponse.Exception);
                 }
             }
-            
+
             await HttpContext.Authentication.SignOutAsync("Cookies");
             await HttpContext.Authentication.SignOutAsync("oidc");
         }
-        
+
         public async Task WriteOutIdentityInformation()
         {
             // get the saved identity token
@@ -257,7 +254,7 @@ namespace ImageGallery.Client.Controllers
         [Authorize(Policy = "CanOrderFrame")]
         public async Task<IActionResult> OrderFrame()
         {
-            var discoveryClient = new DiscoveryClient("https://localhost:44379/");
+            var discoveryClient = new DiscoveryClient("https://localhost:44397/");
             var metaDataResponse = await discoveryClient.GetAsync();
 
             var userInfoClient = new UserInfoClient(metaDataResponse.UserInfoEndpoint);
@@ -275,9 +272,8 @@ namespace ImageGallery.Client.Controllers
             }
 
             var address = response.Claims.FirstOrDefault(c => c.Type == "address")?.Value;
-            
+
             return View(new OrderFrameViewModel(address));
         }
-
     }
 }

@@ -108,10 +108,10 @@ namespace ImageGallery.API
 
             // seed the DB with data
             galleryContext.EnsureSeedDataForContext();
-			
+
             app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
             {
-                Authority = "https://localhost:44379/",
+                Authority = "https://localhost:44397/",
                 RequireHttpsMetadata = true,
 
                 ApiName = "imagegalleryapi",

@@ -35,12 +35,6 @@ Dependencies for ESDIDP Project(https://localhost:44397):
 3) Microsoft.aspnetcore.mvc
 3) Microsoft.aspnetcore.StaticFiles
 4) obtain zip files https://github.com/IdentityServer/IdentityServer4.Quickstart.UI
-5) Microsoft.EntityFrameworkCore.SqlServer
-6) Microsoft.EntityFrameworkCore.Tools
-7) Microsoft.Extensions.Configuration.Json
-8) add-migration InitialESDUserDbMigration   (initial databse)
-
-
 
 Dependencies of ImageClient(https://localhost:44350):
 1) Microsoft.aspnetcore.Authentication.Cookies

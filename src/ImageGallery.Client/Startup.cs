@@ -47,7 +47,6 @@ namespace ImageGallery.Client
                     });
             });
 
-
             // register an IHttpContextAccessor so we can access the current
             // HttpContext in services by injecting it
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -82,49 +81,49 @@ namespace ImageGallery.Client
 
             app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions
             {
-                AuthenticationScheme = "oidc",
-                Authority = "https://localhost:44379/",
-                RequireHttpsMetadata = true,
-                ClientId = "imagegalleryclient",
-                Scope = {"openid", "profile", "address", "roles", "imagegalleryapi",
-                "subscriptionlevel", "country", "offline_access"},
-                ResponseType = "code id_token",
-                // CallbackPath = new PathString("...")
-               // SignedOutCallbackPath = new PathString("")
-                SignInScheme = "Cookies",
-                SaveTokens = true, 
-                ClientSecret = "secret",
-                GetClaimsFromUserInfoEndpoint = true,
-                Events = new OpenIdConnectEvents()
-                {
-                    OnTokenValidated = tokenValidatedContext =>
-                    {
-                        var identity = tokenValidatedContext.Ticket.Principal.Identity 
-                            as ClaimsIdentity;
+                    AuthenticationScheme = "oidc",
+                    Authority = "https://localhost:44397/",
+                    RequireHttpsMetadata = true,
+                    ClientId = "imagegalleryclient",
+                    Scope = {"openid", "profile", "address", "roles", "imagegalleryapi", "subscriptionlevel", "country", "offline_access" }, 
+                    ResponseType = "code id_token",
+                   // CallbackPath = new PathString("...")
+                   //SignedOutCallbackPath = new PathString(""),
+                   SignInScheme = "Cookies",
+                   SaveTokens = true,
+                   ClientSecret = "secret",
+                   GetClaimsFromUserInfoEndpoint = true,
+                   Events = new OpenIdConnectEvents()
+                   {
+                       OnTokenValidated = tokenValidatedContext =>
+                       {
+                           var identity = tokenValidatedContext.Ticket.Principal.Identity as ClaimsIdentity;
 
-                        var subjectClaim = identity.Claims.FirstOrDefault(z => z.Type == "sub");
+                           var subjectClaim = identity.Claims.FirstOrDefault(z => z.Type == "sub");
 
-                        var newClaimsIdentity = new ClaimsIdentity(
-                          tokenValidatedContext.Ticket.AuthenticationScheme,
-                          "given_name",
-                          "role");
+                           var newClaimsIdentity = new ClaimsIdentity(
+                               tokenValidatedContext.Ticket.AuthenticationScheme,
+                               "given_name",
+                               "role");
 
-                        newClaimsIdentity.AddClaim(subjectClaim);
+                           newClaimsIdentity.AddClaim(subjectClaim);
 
-                        tokenValidatedContext.Ticket = new AuthenticationTicket(
+                           tokenValidatedContext.Ticket = new AuthenticationTicket(
                             new ClaimsPrincipal(newClaimsIdentity),
                             tokenValidatedContext.Ticket.Properties,
                             tokenValidatedContext.Ticket.AuthenticationScheme);
 
-                        return Task.FromResult(0);
-                    },
+                           return Task.FromResult(0);
+                       },
 
-                    OnUserInformationReceived = userInformationReceivedContext =>
-                    {
-                        userInformationReceivedContext.User.Remove("address");
-                        return Task.FromResult(0);
-                    }
-                }
+                       OnUserInformationReceived = userInformationReceivedContext =>
+                       {
+                           userInformationReceivedContext.User.Remove("address");
+                           return Task.FromResult(0);
+                       }
+
+                   }
+
             });
 
             app.UseStaticFiles();
