@@ -4,7 +4,7 @@
 
 using System;
 
-namespace IdentityServer4.Quickstart.UI
+namespace ESD.IDP.Controllers.Account
 {
     public class AccountOptions
     {

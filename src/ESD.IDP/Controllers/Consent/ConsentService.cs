@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IdentityServer4.Quickstart.UI
+namespace ESD.IDP.Controllers.Consent
 {
     public class ConsentService
     {
