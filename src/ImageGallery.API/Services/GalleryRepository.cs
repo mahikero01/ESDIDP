@@ -16,8 +16,8 @@ namespace ImageGallery.API.Services
         public bool ImageExists(Guid id)
         {
             return _context.Images.Any(i => i.Id == id);
-        }
-        
+        }       
+
         public Image GetImage(Guid id)
         {
             return _context.Images.FirstOrDefault(i => i.Id == id);
@@ -31,8 +31,9 @@ namespace ImageGallery.API.Services
 
         public bool IsImageOwner(Guid id, string ownerId)
         {
-            return _context.Images.Any(i => i.Id ==id && i.OwnerId == ownerId);
+            return _context.Images.Any(i => i.Id == id && i.OwnerId == ownerId);
         }
+
 
         public void AddImage(Image image)
         {

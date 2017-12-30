@@ -44,15 +44,7 @@ namespace ImageGallery.API.Controllers
         [HttpGet("{id}", Name = "GetImage")]
         [Authorize("MustOwnImage")]
         public IActionResult GetImage(Guid id)
-        {
-            /*
-            var ownerId = User.Claims.FirstOrDefault(c => c.Type == "sub").Value;
-
-            if (!_galleryRepository.IsImageOwner(id, ownerId))
-            {
-                return StatusCode(403);
-            }
-            */
+        {          
             var imageFromRepo = _galleryRepository.GetImage(id);
 
             if (imageFromRepo == null)
@@ -92,12 +84,7 @@ namespace ImageGallery.API.Controllers
 
             // create the filename
             string fileName = Guid.NewGuid().ToString() + ".jpg";
-
-            // set the ownerId on the imageEntity
-            var ownerId = User.Claims.FirstOrDefault(c => c.Type == "sub").Value;
-            imageEntity.OwnerId = ownerId;
-
-
+            
             // the full file path
             var filePath = Path.Combine($"{webRootPath}/images/{fileName}");
 
@@ -106,6 +93,10 @@ namespace ImageGallery.API.Controllers
 
             // fill out the filename
             imageEntity.FileName = fileName;
+
+            // set the ownerId on the imageEntity
+            var ownerId = User.Claims.FirstOrDefault(c => c.Type == "sub").Value;
+            imageEntity.OwnerId = ownerId;
 
             // add and save.  
             _galleryRepository.AddImage(imageEntity);
@@ -126,13 +117,7 @@ namespace ImageGallery.API.Controllers
         [Authorize("MustOwnImage")]
         public IActionResult DeleteImage(Guid id)
         {
-            /*var ownerId = User.Claims.FirstOrDefault(c => c.Type == "sub").Value;
-
-            if (!_galleryRepository.IsImageOwner(id, ownerId))
-            {
-                return StatusCode(403);
-            }*/
-
+            
             var imageFromRepo = _galleryRepository.GetImage(id);
 
             if (imageFromRepo == null)
@@ -155,13 +140,7 @@ namespace ImageGallery.API.Controllers
         public IActionResult UpdateImage(Guid id, 
             [FromBody] ImageForUpdate imageForUpdate)
         {
-            /*var ownerId = User.Claims.FirstOrDefault(c => c.Type == "sub").Value;
-
-            if (!_galleryRepository.IsImageOwner(id, ownerId))
-            {
-                return StatusCode(403);
-            }*/
-
+           
             if (imageForUpdate == null)
             {
                 return BadRequest();
