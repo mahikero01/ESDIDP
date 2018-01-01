@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Authentication;
 using IdentityServer4.Events;
 using IdentityServer4.Extensions;
 using IdentityServer4;
+using Marvin.IDP.Services;
 
 namespace Marvin.IDP.Controllers.Account
     
@@ -32,6 +33,7 @@ namespace Marvin.IDP.Controllers.Account
     public class AccountController : Controller
     {
         private readonly TestUserStore _users;
+        private readonly IMarvinUserRepository _marvinUserRepository;
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IEventService _events;
         private readonly AccountService _account;
@@ -41,10 +43,11 @@ namespace Marvin.IDP.Controllers.Account
             IClientStore clientStore,
             IHttpContextAccessor httpContextAccessor,
             IEventService events,
-            TestUserStore users = null)
+            IMarvinUserRepository marvinUserRepository)
         {
             // if the TestUserStore is not in DI, then we'll just use the global users collection
-            _users = users ?? new TestUserStore(TestUsers.Users);
+            _marvinUserRepository = marvinUserRepository;
+            //_users = users ?? new TestUserStore(TestUsers.Users);
             _interaction = interaction;
             _events = events;
             _account = new AccountService(interaction, httpContextAccessor, clientStore);
@@ -77,7 +80,7 @@ namespace Marvin.IDP.Controllers.Account
             if (ModelState.IsValid)
             {
                 // validate username/password against in-memory store
-                if (_users.ValidateCredentials(model.Username, model.Password))
+                if (_marvinUserRepository.AreUserCredentialsValid(model.Username, model.Password))
                 {
                     AuthenticationProperties props = null;
                     // only set explicit expiration here if persistent. 
@@ -92,7 +95,7 @@ namespace Marvin.IDP.Controllers.Account
                     };
 
                     // issue authentication cookie with subject ID and username
-                    var user = _users.FindByUsername(model.Username);
+                    var user = _marvinUserRepository.GetUserByUsername(model.Username);
                     await _events.RaiseAsync(new UserLoginSuccessEvent(user.Username, user.SubjectId, user.Username));
                     await HttpContext.Authentication.SignInAsync(user.SubjectId, user.Username, props);
 
