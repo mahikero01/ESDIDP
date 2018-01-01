@@ -18,8 +18,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using IdentityServer4.Events;
 using IdentityServer4.Extensions;
+using IdentityServer4;
 
-namespace IdentityServer4.Quickstart.UI
+namespace Marvin.IDP.Controllers.Account
+    
 {
     /// <summary>
     /// This sample controller implements a typical login/logout/provision workflow for local and external accounts.
