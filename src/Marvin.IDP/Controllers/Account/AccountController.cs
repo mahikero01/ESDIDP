@@ -32,7 +32,7 @@ namespace Marvin.IDP.Controllers.Account
     [SecurityHeaders]
     public class AccountController : Controller
     {
-        private readonly TestUserStore _users;
+        //private readonly TestUserStore _users;
         private readonly IMarvinUserRepository _marvinUserRepository;
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IEventService _events;
@@ -205,12 +205,17 @@ namespace Marvin.IDP.Controllers.Account
             var userId = userIdClaim.Value;
 
             // check if the external user is already provisioned
-            var user = _users.FindByExternalProvider(provider, userId);
+            //var user = _users.FindByExternalProvider(provider, userId);
+            var user = _marvinUserRepository.GetUserByProvider(provider, userId);
             if (user == null)
             {
-                // this sample simply auto-provisions new external user
-                // another common approach is to start a registrations workflow first
-                user = _users.AutoProvisionUser(provider, userId, claims);
+                var returnUrlAfterRegistration =
+                    Url.Action("ExternalLoginCallback", new { returnUrl = returnUrl });
+
+                var continueWithUrl = Url.Action("RegisterUser", "UserRegistration"
+                  , new { returnUrl = returnUrlAfterRegistration, provider = provider, providerUserId = userId });
+
+                return Redirect(continueWithUrl);
             }
 
             var additionalClaims = new List<Claim>();
