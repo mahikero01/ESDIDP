@@ -64,6 +64,13 @@ namespace Marvin.IDP
             marvinUserContext.Database.Migrate();
             marvinUserContext.EnsureSeedDataForContext();
 
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationScheme = "idsrv.2FA",
+                AutomaticAuthenticate = false,
+                AutomaticChallenge = false
+            });
+
             app.UseIdentityServer();
 
             app.UseFacebookAuthentication(new FacebookOptions
