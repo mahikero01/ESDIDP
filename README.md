@@ -38,7 +38,7 @@ Dependencies for ESDIDP Project(https://localhost:44379):
 5) Microsoft.EntityFrameworkCore.SqlServer
 6) Microsoft.EntityFrameworkCore.Tools
 7) Microsoft.Extensions.Configuration.Json  (set properties of appsetting.json "Copy to Output Directory -> Copy always")
-
+8) Microsoft.AspNetCore.Authentication.Facebook
 
 Dependencies of ImageClient(https://localhost:44355):
 1) Microsoft.aspnetcore.Authentication.Cookies
