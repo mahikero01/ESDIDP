@@ -29,7 +29,7 @@ Access token
 3) The IDP controls the expiration policy
 
 
-Dependencies for ESDIDP Project(https://localhost:44397):
+Dependencies for ESDIDP Project(https://localhost:44379):
 1) IdentityServer4
 2) Microsoft.Extensions.Logging.Debug
 3) Microsoft.aspnetcore.mvc
@@ -40,13 +40,13 @@ Dependencies for ESDIDP Project(https://localhost:44397):
 7) Microsoft.Extensions.Configuration.Json  (set properties of appsetting.json "Copy to Output Directory -> Copy always")
 
 
-Dependencies of ImageClient(https://localhost:44350):
+Dependencies of ImageClient(https://localhost:44355):
 1) Microsoft.aspnetcore.Authentication.Cookies
 2) Microsoft.aspnetcore.Authentication.OpenIdConnect
 3) IdentityModel
 4) Microsoft.AspNetCore.Authorization
 
-Dependencies of ImageAPI (https://localhost:44323):  
+Dependencies of ImageAPI (https://localhost:44322):  
 1) IdentityServer4.AccessTokenValidation
 
 
