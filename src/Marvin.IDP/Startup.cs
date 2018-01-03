@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using Marvin.IDP.Entities;
 using Marvin.IDP.Services;
 using IdentityServer4;
+using System.Reflection;
+using IdentityServer4.EntityFramework.DbContexts;
 
 namespace Marvin.IDP
 {
@@ -39,19 +41,27 @@ namespace Marvin.IDP
 
             services.AddScoped<IMarvinUserRepository, MarvinUserRepository>();
 
+            var identityServerDataDBConnectionString =
+               Configuration["connectionStrings:identityServerDataDBConnectionString"];
+
+            var migrationsAssembly = typeof(Startup)
+                .GetTypeInfo().Assembly.GetName().Name;
+
+
             services.AddMvc();
 
             services.AddIdentityServer()
                 .AddTemporarySigningCredential()
                 .AddMarvinUserStore()
-                .AddInMemoryIdentityResources(Config.GetIdentityResources())
-                .AddInMemoryApiResources(Config.GetApiResources())
-                .AddInMemoryClients(Config.GetClients());
+                .AddConfigurationStore(builder =>
+                    builder.UseSqlServer(identityServerDataDBConnectionString,
+                    options => options.MigrationsAssembly(migrationsAssembly)));
+                
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, 
-            ILoggerFactory loggerFactory, MarvinUserContext marvinUserContext)
+            ILoggerFactory loggerFactory, MarvinUserContext marvinUserContext, ConfigurationDbContext configurationDbContext)
         {
             loggerFactory.AddConsole();
             loggerFactory.AddDebug();
@@ -60,6 +70,8 @@ namespace Marvin.IDP
             {
                 app.UseDeveloperExceptionPage();
             }
+            configurationDbContext.Database.Migrate();
+            configurationDbContext.EnsureSeedDataForContext();
 
             marvinUserContext.Database.Migrate();
             marvinUserContext.EnsureSeedDataForContext();

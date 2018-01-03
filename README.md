@@ -39,6 +39,7 @@ Dependencies for ESDIDP Project(https://localhost:44379):
 6) Microsoft.EntityFrameworkCore.Tools
 7) Microsoft.Extensions.Configuration.Json  (set properties of appsetting.json "Copy to Output Directory -> Copy always")
 8) Microsoft.AspNetCore.Authentication.Facebook
+9) IdentityServer4.EntityFramework
 
 Dependencies of ImageClient(https://localhost:44355):
 1) Microsoft.aspnetcore.Authentication.Cookies
@@ -53,5 +54,14 @@ Dependencies of ImageAPI (https://localhost:44322):
 
 EF Core Commands:
 1) add-migration InitialESDUserDBMigration  -> adds a migration folder and snapshot
+
+
+
+
+Making a certificate(use the makecert.exe):
+makecert -r -pe -n "CN=MarvinIdSrvSigningCert" -b 01/01/2017 -e 01/01/2019 eku 1.3.6.1.5.5.7.3.3 -sky signiture -a sha256 -len 2048 -ss my -sr LocalMachine
+
+
+
 
 
