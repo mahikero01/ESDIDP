@@ -55,7 +55,9 @@ Dependencies of ImageAPI (https://localhost:44322):
 EF Core Commands:
 1) add-migration InitialESDUserDBMigration  -> adds a migration folder and snapshot
 
+2) add-migration -name InitialIdentityServerConfigurationDBMigration -context ConfigurationDbContext
 
+3) add-migration -name InitialIdentityServerOperationalDBMigration -context PersistedGrantDbContext
 
 
 Making a certificate(use the makecert.exe):
